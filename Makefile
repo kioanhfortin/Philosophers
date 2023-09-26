@@ -6,7 +6,7 @@
 #    By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/25 11:04:35 by kfortin           #+#    #+#              #
-#    Updated: 2023/09/25 11:52:20 by kfortin          ###   ########.fr        #
+#    Updated: 2023/09/26 15:26:58 by kfortin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,6 +47,8 @@ OBJ_DIR		=	obj/
 ###############################################################################
 
 SRC_FILES		=	philo.c 						\
+					die_path.c						\
+					ft_utilis.c 					\
 
 OBJS			=	$(addprefix $(OBJ_DIR), $(OBJ_FILES))
 OBJ_FILES		=	$(BUILTIN_FILES:.c=.o) $(SRC_FILES:.c=.o)

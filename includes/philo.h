@@ -6,7 +6,7 @@
 /*   By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 11:05:13 by kfortin           #+#    #+#             */
-/*   Updated: 2023/09/26 15:26:37 by kfortin          ###   ########.fr       */
+/*   Updated: 2024/01/10 18:24:25 by kfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,19 @@
 #include <stdio.h>
 #include <pthread.h>
 
+typedef struct s_fork
+{
+    int id;
+    pthread_mutex_t *fork_mutex;
+} t_fork;
+
+typedef struct s_philo 
+{
+    pthread_t id;
+    int *ptr;
+    t_fork *fork;
+}   t_philo;
+
 typedef struct s_time
 {
     int nbr_philo;
@@ -30,7 +43,10 @@ typedef struct s_time
     int total;
     int max;
     int nbr_diner_left;
+    t_philo *philo;
 } t_time;
+
+
 
 void ft_parsing(int argc, char **argv, t_time *time);
 int ft_check_num(int argc, char **argv);
@@ -44,4 +60,7 @@ int ft_time_eat_die_even(t_time *time);
 int ft_time_eat_die_odd(t_time *time);
 int ft_nb_even(int nb);
 
+void ft_init_struct(t_time *time);
+void ft_init_thread(t_time *time);
+void    *ft_routine_principale(void *arg);
 #endif

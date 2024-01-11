@@ -6,7 +6,7 @@
 /*   By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 11:05:13 by kfortin           #+#    #+#             */
-/*   Updated: 2024/01/11 16:11:10 by kfortin          ###   ########.fr       */
+/*   Updated: 2024/01/11 17:23:04 by kfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ typedef struct s_fork
 // typedef struct s_time;
 typedef struct s_philo 
 {
-    pthread_t id;
+    // pthread_t philo;
+    int id;
     int *ptr;
     t_fork fork;
     struct s_time *time;
@@ -49,6 +50,7 @@ typedef struct s_time
     int nbr_diner_left;
     unsigned long tim;
     t_philo *philo;
+    pthread_t *philo_tid;
 } t_time;
 
 
@@ -65,7 +67,8 @@ int ft_time_eat_die_even(t_time *time);
 int ft_time_eat_die_odd(t_time *time);
 int ft_nb_even(int nb);
 
+void ft_init_philo(t_time *time);
 void ft_init_thread(t_time *time);
-void*   ft_routine_principale(void *arg);
+void*   ft_routine_principale(t_philo *philo);
 unsigned long     ft_get_time(void);
 #endif

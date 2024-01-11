@@ -6,7 +6,7 @@
 /*   By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 14:38:32 by kfortin           #+#    #+#             */
-/*   Updated: 2024/01/11 16:22:17 by kfortin          ###   ########.fr       */
+/*   Updated: 2024/01/11 17:26:15 by kfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,13 @@ unsigned long     ft_get_time()
     return (milsec);
 }
 
-void*   ft_routine_principale(void *arg)
+void*   ft_routine_principale(t_philo *philo)
 {
-    // unsigned long time;
-    t_philo *philo;
-    
-    philo = arg;
-    // philo->time->tim = ft_get_time();
+    if (philo->id % 2 == 0)
+        usleep(100);
     pthread_mutex_lock(&philo->fork.fork_mutex_right);
-    printf("%zu has taken a fork\n", ft_get_time());
-    usleep(50);
-    printf("%zu has taken a fork2\n", ft_get_time());
-    usleep(50);
     pthread_mutex_unlock(&philo->fork.fork_mutex_right);
+    printf("%zu %d has taken a fork\n", ft_get_time(), philo->id);
     pthread_exit(&philo->fork.fork_mutex_right);
 }
 
@@ -68,15 +62,16 @@ void ft_init_thread(t_time *time)
     i = 0;
     while(i < time->nbr_philo)
     {
-        // time->philo[i].id = i;
-        pthread_create(&time->philo[i].id, NULL, ft_routine_principale, &time->philo[i]);
+        // printf("%d before create\n", time->philo[i].id);
+        pthread_create(&time->philo_tid[i], NULL, (void*)&ft_routine_principale, &time->philo[i]);
+        // printf("%d after create\n", time->philo[i].id);
         i++;
     }
     //wait for philo to finish
     i = 0;
     while (i < time->nbr_philo)
     {
-        pthread_join(time->philo[i].id, (void**)&time->philo->ptr);
+        pthread_join(time->philo_tid[i], (void**)&time->philo->ptr);
         i++;
     }
     //detruire les mutex
@@ -84,6 +79,21 @@ void ft_init_thread(t_time *time)
     while (i < time->nbr_philo)
     {
         pthread_mutex_destroy(&time->philo[i].fork.fork_mutex_right);
+        i++;
+    }
+}
+
+
+void ft_init_philo(t_time *time)
+{
+    int i;
+    
+    i = 0;
+    time->philo = ft_calloc(sizeof(struct s_philo), time->nbr_philo);
+    time->philo_tid = ft_calloc(sizeof(struct s_philo), time->nbr_philo);
+    while (i < time->nbr_philo)
+    {
+        time->philo[i].id = i;
         i++;
     }
 }

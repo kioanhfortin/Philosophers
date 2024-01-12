@@ -6,7 +6,7 @@
 #    By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/25 11:04:35 by kfortin           #+#    #+#              #
-#    Updated: 2024/01/11 13:35:29 by kfortin          ###   ########.fr        #
+#    Updated: 2024/01/12 13:58:09 by kfortin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ HEADER_F	=	philo.h
 # CFLAGS			=	-Wall -Werror -Wextra -fsanitize=address -g
 
 CC				=	gcc
-CFLAGS			=	-Wall -Werror -Wextra -g
+CFLAGS			=	-Wall -Werror -Wextra -fsanitize=thread -g
 RM 				=	rm -rf
 
 ###############################################################################
@@ -81,8 +81,6 @@ leak:		obj $(NAME)
 
 fd : $(NAME)
 	valgrind --track-fds=yes --trace-children=yes ./philo
-	
-// -f sanitize=thread ac CFLAGS
 
 clean:
 	@$(RM) $(OBJS)

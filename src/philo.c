@@ -6,7 +6,7 @@
 /*   By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 11:10:53 by kfortin           #+#    #+#             */
-/*   Updated: 2024/01/11 17:25:07 by kfortin          ###   ########.fr       */
+/*   Updated: 2024/01/12 16:21:38 by kfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,10 @@ void ft_parsing(int argc, char **argv, t_time *time)
 
 int main(int argc, char **argv)
 {
+    t_philo *philo;
     t_time *time;
 
+    philo = NULL;
     time = ft_calloc(sizeof(struct s_time), 1);
     if (!time)
         return (-1);
@@ -61,9 +63,7 @@ int main(int argc, char **argv)
         if (ft_check_num(argc, argv) == 1)
         {
             ft_parsing(argc, argv, time);
-            ft_init_philo(time);
-            ft_is_philo_die(time);
-            ft_init_thread(time);
+            ft_init_philo(time, philo);
         }
         else
             printf("error parsing\n");

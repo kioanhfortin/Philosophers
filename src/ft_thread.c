@@ -6,46 +6,100 @@
 /*   By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 14:38:32 by kfortin           #+#    #+#             */
-/*   Updated: 2024/01/11 17:26:15 by kfortin          ###   ########.fr       */
+/*   Updated: 2024/01/12 18:18:32 by kfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-unsigned long     ft_get_time()
+time_t    ft_get_time(t_philo *philo)
 {
-    struct timeval start = {-1, -1};
     struct timeval end;
-    unsigned long milsec;
     
-    if (start.tv_sec == -1 && start.tv_usec == -1)
-        gettimeofday(&start, NULL);
     gettimeofday(&end, NULL);
-    milsec = ((end.tv_sec * 1000) + end.tv_usec) - ((start.tv_sec * 1000) + start.tv_usec);
-    return (milsec);
+    return ((end.tv_sec - philo->time->start.tv_sec) * 1000 + (end.tv_usec - philo->time->start.tv_usec) / 1000);
+}
+
+void    ft_philo_eat(t_philo *philo)
+{
+    pthread_mutex_lock(&philo->fork.fork_mutex_right);
+    pthread_mutex_lock(philo->fork.fork_mutex_left);
+    philo->time->tmp_last_diner = ft_get_time(philo);
+    // printf("temps dernier repas : %zu\n", philo->time->tmp_last_diner);
+    printf("%zu philo %d has taken a fork\n", philo->time->tmp_last_diner, philo->id);
+    usleep(philo->time->eat);
+    pthread_mutex_unlock(&philo->fork.fork_mutex_right);
+    pthread_mutex_unlock(philo->fork.fork_mutex_left);
+}
+
+void    ft_philo_sleep(t_philo *philo)
+{
+    printf("%zu philo %d is sleeping\n", ft_get_time(philo), philo->id);
+    usleep(philo->time->sleep);
+}
+
+void    ft_philo_think(t_philo *philo)
+{
+    printf("%zu philo %d is thinking\n", ft_get_time(philo), philo->id);
+}
+
+void    ft_philo_die(t_philo *philo)
+{
+    time_t time_elapsed;
+    
+    time_elapsed = ft_get_time(philo) - philo->time->tmp_last_diner;
+    if (time_elapsed > philo->time->die)
+    {
+        printf("%zu philo %d is dead\n", ft_get_time(philo), philo->id);
+        philo->status = 1;
+    }
 }
 
 void*   ft_routine_principale(t_philo *philo)
-{
+{   
     if (philo->id % 2 == 0)
         usleep(100);
-    pthread_mutex_lock(&philo->fork.fork_mutex_right);
-    pthread_mutex_unlock(&philo->fork.fork_mutex_right);
-    printf("%zu %d has taken a fork\n", ft_get_time(), philo->id);
+    printf("stop flag : %d\n", philo->time->stop);
+    while (philo->time->stop == 0)
+    {
+        if (philo->time->stop == 1)
+            break;
+        printf("main boucle %d\n", philo->status);
+        ft_philo_eat(philo);
+        ft_philo_sleep(philo);
+        ft_philo_think(philo);
+        ft_philo_die(philo);
+        if (philo->time->stop == 1)
+            break;
+    }
     pthread_exit(&philo->fork.fork_mutex_right);
 }
 
-void ft_init_thread(t_time *time)
+int ft_checker(t_philo *philo)
 {
-    // (void)time;
-    // unsigned long tim;
     int i;
+
+    i = 0;
+    while(1)
+    {
+        while (i < philo->time->nbr_philo)
+        {
+            if (philo[i].status == 1)
+                philo->time->stop = 1;
+            i++;
+        }
+    }
+}
+
+void ft_init_thread(t_time *time, t_philo *philo)
+{   
+    int i;
+    
     i = 0;
     //init mutex
-    time->tim = ft_get_time();
     while (i < time->nbr_philo)
     {
-        pthread_mutex_init(&time->philo[i].fork.fork_mutex_right, NULL);
+        pthread_mutex_init(&philo[i].fork.fork_mutex_right, NULL);
         i++;
     }
     //attribuer mutex a gauche
@@ -53,47 +107,32 @@ void ft_init_thread(t_time *time)
     while (i < time->nbr_philo)
     {
         if (i > 0)
-            time->philo[i].fork.fork_mutex_left = time->philo[i - 1].fork.fork_mutex_left;
+            philo[i].fork.fork_mutex_left = &philo[i - 1].fork.fork_mutex_right;
         else
-            time->philo[i].fork.fork_mutex_left = time->philo[time->nbr_philo - 1].fork.fork_mutex_left;
+            philo[i].fork.fork_mutex_left = &philo[time->nbr_philo].fork.fork_mutex_right;
         i++;
     }
     //init pthread
+    gettimeofday(&philo->time->start, NULL);
     i = 0;
     while(i < time->nbr_philo)
     {
-        // printf("%d before create\n", time->philo[i].id);
-        pthread_create(&time->philo_tid[i], NULL, (void*)&ft_routine_principale, &time->philo[i]);
-        // printf("%d after create\n", time->philo[i].id);
+        pthread_create(&time->philo_tid[i], NULL, (void*)&ft_routine_principale, &philo[i]);
         i++;
     }
+    ft_checker(philo);
     //wait for philo to finish
     i = 0;
     while (i < time->nbr_philo)
     {
-        pthread_join(time->philo_tid[i], (void**)&time->philo->ptr);
+        pthread_join(time->philo_tid[i], (void**)&philo->ptr);
         i++;
     }
     //detruire les mutex
     i = 0;
     while (i < time->nbr_philo)
     {
-        pthread_mutex_destroy(&time->philo[i].fork.fork_mutex_right);
-        i++;
-    }
-}
-
-
-void ft_init_philo(t_time *time)
-{
-    int i;
-    
-    i = 0;
-    time->philo = ft_calloc(sizeof(struct s_philo), time->nbr_philo);
-    time->philo_tid = ft_calloc(sizeof(struct s_philo), time->nbr_philo);
-    while (i < time->nbr_philo)
-    {
-        time->philo[i].id = i;
+        pthread_mutex_destroy(&philo[i].fork.fork_mutex_right);
         i++;
     }
 }

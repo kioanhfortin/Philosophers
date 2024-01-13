@@ -6,7 +6,7 @@
 /*   By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 11:05:13 by kfortin           #+#    #+#             */
-/*   Updated: 2024/01/12 18:17:43 by kfortin          ###   ########.fr       */
+/*   Updated: 2024/01/12 19:57:10 by kfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int ft_time_eat_die_even(t_time *time);
 int ft_time_eat_die_odd(t_time *time);
 int ft_nb_even(int nb);
 
+void    ft_usleep(long tim, t_philo *philo);
 int ft_init_philo(t_time *time, t_philo *philo);
 void ft_init_thread(t_time *time, t_philo *philo);
 time_t    ft_get_time(t_philo *philo);

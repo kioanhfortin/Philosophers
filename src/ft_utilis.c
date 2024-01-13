@@ -6,7 +6,7 @@
 /*   By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 15:25:24 by kfortin           #+#    #+#             */
-/*   Updated: 2024/01/12 18:17:59 by kfortin          ###   ########.fr       */
+/*   Updated: 2024/01/12 20:04:31 by kfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,16 @@ int ft_nb_even(int nb)
     if (nb % 2 == 0)
         return (1);
     return (0);
+}
+
+void    ft_usleep(long tim, t_philo *philo)
+{
+    long long   start;
+
+    start = ft_get_time(philo);
+    usleep(tim * 1000);
+    while (ft_get_time(philo) < tim + start)
+        usleep(150);
 }
 
 int ft_init_philo(t_time *time, t_philo *philo)

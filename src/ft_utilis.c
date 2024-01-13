@@ -6,7 +6,7 @@
 /*   By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 15:25:24 by kfortin           #+#    #+#             */
-/*   Updated: 2024/01/12 20:04:31 by kfortin          ###   ########.fr       */
+/*   Updated: 2024/01/13 13:41:34 by kfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ int ft_init_philo(t_time *time, t_philo *philo)
         philo[i].id = i + 1;
         i++;
     }
-    ft_is_philo_die(time);
     time->stop = 0;
+    ft_is_philo_die(time);
     ft_init_thread(time, philo);
     return(0);
 }

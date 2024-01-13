@@ -6,7 +6,7 @@
 #    By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/25 11:04:35 by kfortin           #+#    #+#              #
-#    Updated: 2024/01/12 13:58:09 by kfortin          ###   ########.fr        #
+#    Updated: 2024/01/13 15:06:58 by kfortin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ HEADER_F	=	philo.h
 ###############################################################################
 
 # CFLAGS			=	-Wall -Werror -Wextra -fsanitize=address -g
+# CFLAGS			=	-Wall -Werror -Wextra -g
 
 CC				=	gcc
 CFLAGS			=	-Wall -Werror -Wextra -fsanitize=thread -g
@@ -48,6 +49,7 @@ OBJ_DIR		=	obj/
 
 SRC_FILES		=	philo.c 						\
 					die_path.c						\
+					ft_routine.c 					\
 					ft_utilis.c 					\
 					ft_thread.c 					\
 

@@ -6,7 +6,7 @@
 /*   By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 11:05:13 by kfortin           #+#    #+#             */
-/*   Updated: 2024/01/12 19:57:10 by kfortin          ###   ########.fr       */
+/*   Updated: 2024/01/13 13:56:08 by kfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,18 @@
 #include <stdio.h>
 #include <pthread.h>
 #include <sys/time.h>
+
+typedef enum e_die
+{
+	ONE_PHILO,
+	EATING,
+	SLEEPING,
+	EAT_THEN_DIE,
+	THINKING,
+	EAT_DIE_EVEN,
+    EAT_DIE_ODD,
+    DONT_DIE,
+} t_die;
 
 typedef struct s_fork
 {
@@ -39,7 +51,9 @@ typedef struct s_time
     int stop;
     int total;
     int max;
+    int total_time_before_death;
     int nbr_diner_left;
+    int way_to_die;
     pthread_t *philo_tid;
     struct s_philo *philo;
     struct timeval start;
@@ -70,6 +84,8 @@ void    ft_usleep(long tim, t_philo *philo);
 int ft_init_philo(t_time *time, t_philo *philo);
 void ft_init_thread(t_time *time, t_philo *philo);
 time_t    ft_get_time(t_philo *philo);
+
+void*   ft_routine_die_eating(t_philo *philo);
 void*   ft_routine_principale(t_philo *philo);
 
 void    ft_philo_eat(t_philo *philo);

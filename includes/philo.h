@@ -6,7 +6,7 @@
 /*   By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 11:05:13 by kfortin           #+#    #+#             */
-/*   Updated: 2024/01/19 21:22:36 by kfortin          ###   ########.fr       */
+/*   Updated: 2024/01/20 14:56:07 by kfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,16 @@ typedef struct s_time
     int think;
     int nbr_cycle;
     time_t tmp_last_diner;
-    // int stop;
+    pthread_mutex_t last_diner_mutex;
+    int stop;
+    pthread_mutex_t stop_mutex;
     int total;
     int max;
     int total_time_before_death;
     int nbr_diner_left;
     int way_to_die;
     int *status;
+    pthread_mutex_t status_mutex;
     pthread_t *philo_tid;
     pthread_mutex_t print_mutex;
     struct s_philo *philo;
@@ -98,6 +101,8 @@ time_t    ft_get_time(t_philo *philo);
 
 void*   ft_routine_alone(t_philo *philo);
 void*   ft_routine_die_eating(t_philo *philo);
+void*   ft_routine_die_sleeping(t_philo *philo);
+void*   ft_routine_eat_then_die(t_philo *philo);
 void*   ft_routine_principale(t_philo *philo);
 
 void    ft_philo_eat(t_philo *philo);

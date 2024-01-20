@@ -6,7 +6,7 @@
 /*   By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 14:01:28 by kfortin           #+#    #+#             */
-/*   Updated: 2024/01/19 21:38:56 by kfortin          ###   ########.fr       */
+/*   Updated: 2024/01/20 14:56:33 by kfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,7 @@ int ft_die_eating(t_time *time)
 
 int ft_die_sleeping(t_time *time)
 {
-    time->max = (time->eat + time->sleep) * time->nbr_cycle;
-    time->nbr_diner_left = time->max / (time->eat + time->sleep) - time->nbr_cycle;
-    if (time->nbr_diner_left <= 0)
+    if (time->eat + time->sleep == time->die)
         return (1);
     return(0);
 }
@@ -59,7 +57,6 @@ int ft_time_eat_die_odd(t_time *time)
     return (0);
 }
 
-
 void ft_is_philo_die(t_time *time)
 {
     int       (*built_tab[7])(t_time*);
@@ -73,8 +70,9 @@ void ft_is_philo_die(t_time *time)
     built_tab[5] = ft_time_eat_die_even;
     built_tab[6] = ft_time_eat_die_odd;
 
-    while (count <= 7)
+    while (count < 7)
     {
+        // printf("way to die :%d\n", count);
         if ((built_tab[count])(time) == 1)
             break;
         count++;
@@ -87,5 +85,7 @@ void ft_is_philo_die(t_time *time)
             time->way_to_die = ONE_PHILO;
     }
     else
+    {
         time->way_to_die = count;
+    }
 }

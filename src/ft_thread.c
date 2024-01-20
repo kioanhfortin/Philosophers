@@ -6,7 +6,7 @@
 /*   By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 14:38:32 by kfortin           #+#    #+#             */
-/*   Updated: 2024/01/19 21:27:21 by kfortin          ###   ########.fr       */
+/*   Updated: 2024/01/20 15:22:36 by kfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,14 @@ time_t    ft_get_time(t_philo *philo)
 void    ft_philo_eat(t_philo *philo)
 {
     pthread_mutex_lock(&philo->fork.fork_mutex_right);
-    pthread_mutex_lock(&philo->time->print_mutex);
-    printf("%zu %d has taken a fork\n", philo->time->tmp_last_diner, philo->id);
     pthread_mutex_lock(philo->fork.fork_mutex_left);
-    printf("%zu %d has taken a fork\n", philo->time->tmp_last_diner, philo->id);    
-    printf("%zu %d is eating\n", philo->time->tmp_last_diner, philo->id);
+    go_print(philo, FORK);
+    go_print(philo, FORK);
+    go_print(philo, EAT);
+    
+    pthread_mutex_lock(&philo->time->last_diner_mutex);
     philo->time->tmp_last_diner = ft_get_time(philo);
-    ft_usleep(philo->time->eat, philo);
-    pthread_mutex_unlock(&philo->time->print_mutex);
-    pthread_mutex_unlock(&philo->fork.fork_mutex_right);
-    pthread_mutex_unlock(philo->fork.fork_mutex_left);
+    pthread_mutex_unlock(&philo->time->last_diner_mutex);
 }
 
 void    ft_philo_sleep(t_philo *philo)
@@ -89,6 +87,9 @@ void ft_init_thread(t_time *time, t_philo *philo)
         i++;
     }
     pthread_mutex_init(&time->print_mutex, NULL);
+    pthread_mutex_init(&time->last_diner_mutex, NULL);
+    pthread_mutex_init(&time->status_mutex, NULL);
+    pthread_mutex_init(&time->stop_mutex, NULL);
     //attribuer mutex a gauche
     i = 0;
     while (i < time->nbr_philo)
@@ -111,6 +112,14 @@ void ft_init_thread(t_time *time, t_philo *philo)
         else if (philo->time->way_to_die == EATING)
         {
             pthread_create(&time->philo_tid[i], NULL, (void*)&ft_routine_die_eating, &philo[i]);
+        }
+        else if (philo->time->way_to_die == SLEEPING)
+        {
+            pthread_create(&time->philo_tid[i], NULL, (void*)&ft_routine_die_sleeping, &philo[i]);
+        }
+        else if (philo->time->way_to_die == EAT_THEN_DIE)
+        {
+            pthread_create(&time->philo_tid[i], NULL, (void*)&ft_routine_eat_then_die, &philo[i]);
         }
         else
             pthread_create(&time->philo_tid[i], NULL, (void*)&ft_routine_principale, &philo[i]);

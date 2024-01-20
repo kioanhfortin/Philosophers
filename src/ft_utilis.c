@@ -6,7 +6,7 @@
 /*   By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 15:25:24 by kfortin           #+#    #+#             */
-/*   Updated: 2024/01/19 21:39:04 by kfortin          ###   ########.fr       */
+/*   Updated: 2024/01/20 12:03:39 by kfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,13 @@ int ft_init_philo(t_time *time, t_philo *philo)
         philo[i].id = i + 1;
         i++;
     }
-    time->status = ft_calloc(sizeof(int), time->nbr_philo);
+    time->status = ft_calloc(sizeof(int*), 1);
+    i = 0;
+    while (i < time->nbr_philo)
+    {
+        time->status[i] = (int)ft_calloc(sizeof(int), 1);
+        i++;
+    }
     ft_is_philo_die(time);
     ft_init_thread(time, philo);
     return(0);

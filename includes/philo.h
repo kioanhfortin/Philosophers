@@ -6,7 +6,7 @@
 /*   By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 11:05:13 by kfortin           #+#    #+#             */
-/*   Updated: 2024/01/13 13:56:08 by kfortin          ###   ########.fr       */
+/*   Updated: 2024/01/19 21:22:36 by kfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,15 @@ typedef enum e_die
     DONT_DIE,
 } t_die;
 
+typedef enum e_print
+{
+    FORK,
+	EAT,
+	SLEEP,
+	THINK,
+    DIE,
+} t_print;
+
 typedef struct s_fork
 {
     // int id;
@@ -48,13 +57,15 @@ typedef struct s_time
     int think;
     int nbr_cycle;
     time_t tmp_last_diner;
-    int stop;
+    // int stop;
     int total;
     int max;
     int total_time_before_death;
     int nbr_diner_left;
     int way_to_die;
+    int *status;
     pthread_t *philo_tid;
+    pthread_mutex_t print_mutex;
     struct s_philo *philo;
     struct timeval start;
 } t_time;
@@ -62,7 +73,7 @@ typedef struct s_time
 typedef struct s_philo 
 {
     int id;
-    int status;
+    // int status;
     int *ptr;
     t_fork fork;
     t_time *time;
@@ -85,6 +96,7 @@ int ft_init_philo(t_time *time, t_philo *philo);
 void ft_init_thread(t_time *time, t_philo *philo);
 time_t    ft_get_time(t_philo *philo);
 
+void*   ft_routine_alone(t_philo *philo);
 void*   ft_routine_die_eating(t_philo *philo);
 void*   ft_routine_principale(t_philo *philo);
 
@@ -92,6 +104,9 @@ void    ft_philo_eat(t_philo *philo);
 void    ft_philo_sleep(t_philo *philo);
 void    ft_philo_think(t_philo *philo);
 void    ft_philo_die(t_philo *philo);
+
+void    go_print(t_philo *philo, int i);
+int     ft_check_status(t_philo *philo);
 
 int ft_checker(t_philo *philo);
 

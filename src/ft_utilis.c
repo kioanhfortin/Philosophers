@@ -6,7 +6,7 @@
 /*   By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 15:25:24 by kfortin           #+#    #+#             */
-/*   Updated: 2024/01/13 13:41:34 by kfortin          ###   ########.fr       */
+/*   Updated: 2024/01/19 21:39:04 by kfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,19 @@ void    ft_usleep(long tim, t_philo *philo)
         usleep(150);
 }
 
+// void    ft_init_status(t_time *time)
+// {
+//     int i;
+
+//     i = 0;
+//     time->status = ft_calloc(sizeof(int), time->nbr_philo);
+//     while (i < time->nbr_philo)
+//     {
+//         time->status
+//         i++;
+//     }
+// }
+
 int ft_init_philo(t_time *time, t_philo *philo)
 {
     int i;
@@ -47,7 +60,7 @@ int ft_init_philo(t_time *time, t_philo *philo)
         philo[i].id = i + 1;
         i++;
     }
-    time->stop = 0;
+    time->status = ft_calloc(sizeof(int), time->nbr_philo);
     ft_is_philo_die(time);
     ft_init_thread(time, philo);
     return(0);

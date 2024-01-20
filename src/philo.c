@@ -6,7 +6,7 @@
 /*   By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 11:10:53 by kfortin           #+#    #+#             */
-/*   Updated: 2024/01/12 16:21:38 by kfortin          ###   ########.fr       */
+/*   Updated: 2024/01/19 16:47:04 by kfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int main(int argc, char **argv)
     }
     else
         printf("error number of arguments\n");
-    printf("nbr philo : %d\ntime die : %d\ntime eat : %d\ntime spleep %d\nnbr cycle : %d\n", time->nbr_philo, time->die, time->eat, time->sleep, time->nbr_cycle);
+    // printf("nbr philo : %d\ntime die : %d\ntime eat : %d\ntime spleep %d\nnbr cycle : %d\n", time->nbr_philo, time->die, time->eat, time->sleep, time->nbr_cycle);
     if(time)
         free(time);
     return(0);

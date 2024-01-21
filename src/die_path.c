@@ -6,7 +6,7 @@
 /*   By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 14:01:28 by kfortin           #+#    #+#             */
-/*   Updated: 2024/01/20 18:15:15 by kfortin          ###   ########.fr       */
+/*   Updated: 2024/01/21 13:16:10 by kfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,10 @@ void ft_is_philo_die(t_time *time)
 
     while (count < 7)
     {
-        // printf("way to die :%d\n", count);
         if ((built_tab[count])(time) == 1)
             break;
         count++;
+        printf("way to die :%d\n", count);
     }
     if (time->nbr_philo == 1)
     {

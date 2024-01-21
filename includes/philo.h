@@ -6,7 +6,7 @@
 /*   By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 11:05:13 by kfortin           #+#    #+#             */
-/*   Updated: 2024/01/20 18:03:38 by kfortin          ###   ########.fr       */
+/*   Updated: 2024/01/21 12:59:20 by kfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ typedef enum e_print
 
 typedef struct s_fork
 {
-    // int id;
     pthread_mutex_t fork_mutex_right;
     pthread_mutex_t *fork_mutex_left;
 } t_fork;
@@ -69,6 +68,8 @@ typedef struct s_time
     int way_to_die;
     int *status;
     pthread_mutex_t status_mutex;
+    int *status_fork;
+    pthread_mutex_t status_fork_mutex;
     pthread_t *philo_tid;
     pthread_mutex_t print_mutex;
     struct s_philo *philo;
@@ -108,7 +109,7 @@ void*   ft_routine_die_thinking(t_philo *philo);
 void*   ft_routine_principale(t_philo *philo);
 
 void    ft_philo_eat(t_philo *philo);
-void    ft_philo_sleep(t_philo *philo);
+// void    ft_philo_sleep(t_philo *philo);
 void    ft_philo_think(t_philo *philo);
 void    ft_philo_die(t_philo *philo);
 
@@ -116,6 +117,6 @@ void    go_print(t_philo *philo, int i);
 int     ft_check_status(t_philo *philo);
 int     ft_check_cycle(t_philo *philo);
 
-int ft_checker(t_philo *philo);
+// int ft_checker(t_philo *philo);
 
 #endif

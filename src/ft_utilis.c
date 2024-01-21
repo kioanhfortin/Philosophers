@@ -6,7 +6,7 @@
 /*   By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 15:25:24 by kfortin           #+#    #+#             */
-/*   Updated: 2024/01/20 12:03:39 by kfortin          ###   ########.fr       */
+/*   Updated: 2024/01/21 12:08:46 by kfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,13 @@ int ft_init_philo(t_time *time, t_philo *philo)
     while (i < time->nbr_philo)
     {
         time->status[i] = (int)ft_calloc(sizeof(int), 1);
+        i++;
+    }
+    time->status_fork = ft_calloc(sizeof(int*), 1);
+    i = 0;
+    while (i < time->nbr_philo)
+    {
+        time->status_fork[i] = (int)ft_calloc(sizeof(int), 1);
         i++;
     }
     ft_is_philo_die(time);

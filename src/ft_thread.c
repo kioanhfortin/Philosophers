@@ -6,7 +6,7 @@
 /*   By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 14:38:32 by kfortin           #+#    #+#             */
-/*   Updated: 2024/01/20 15:22:36 by kfortin          ###   ########.fr       */
+/*   Updated: 2024/01/20 18:04:40 by kfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ void ft_init_thread(t_time *time, t_philo *philo)
     pthread_mutex_init(&time->last_diner_mutex, NULL);
     pthread_mutex_init(&time->status_mutex, NULL);
     pthread_mutex_init(&time->stop_mutex, NULL);
+    pthread_mutex_init(&time->cycle_mutex, NULL);
     //attribuer mutex a gauche
     i = 0;
     while (i < time->nbr_philo)
@@ -120,6 +121,10 @@ void ft_init_thread(t_time *time, t_philo *philo)
         else if (philo->time->way_to_die == EAT_THEN_DIE)
         {
             pthread_create(&time->philo_tid[i], NULL, (void*)&ft_routine_eat_then_die, &philo[i]);
+        }
+        else if (philo->time->way_to_die == THINKING)
+        {
+            pthread_create(&time->philo_tid[i], NULL, (void*)&ft_routine_die_thinking, &philo[i]);
         }
         else
             pthread_create(&time->philo_tid[i], NULL, (void*)&ft_routine_principale, &philo[i]);

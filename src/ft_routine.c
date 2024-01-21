@@ -6,7 +6,7 @@
 /*   By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 13:12:11 by kfortin           #+#    #+#             */
-/*   Updated: 2024/01/20 15:30:43 by kfortin          ###   ########.fr       */
+/*   Updated: 2024/01/20 19:04:30 by kfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,24 +59,68 @@ void    go_print(t_philo *philo, int i)
     pthread_mutex_unlock(&philo->time->stop_mutex);
 }
 
+int     ft_check_cycle(t_philo *philo)
+{
+    if (philo->time->nbr_cycle != 0)
+    {
+        pthread_mutex_lock(&philo->time->cycle_mutex);
+        if (philo->time->nbr_cycle == philo->time->cycle_count)
+        {
+            pthread_mutex_unlock(&philo->time->cycle_mutex);
+            return (1);
+        }
+        pthread_mutex_unlock(&philo->time->cycle_mutex);
+    }
+    pthread_mutex_lock(&philo->time->cycle_mutex);
+    philo->time->cycle_count++;
+    pthread_mutex_unlock(&philo->time->cycle_mutex);
+    return (0);  
+}
+
 void*   ft_routine_eat_then_die(t_philo *philo)
 {
     pthread_exit(&philo->fork.fork_mutex_right);
 }
 
+void*   ft_routine_die_thinking(t_philo *philo)
+{
+    if (philo->id % 2 == 1)
+        usleep(philo->time->eat);
+    if (ft_check_cycle(philo) == 1)
+        pthread_exit(&philo->fork.fork_mutex_right);
+    ft_philo_eat(philo);
+    ft_usleep(philo->time->eat, philo);
+    
+    pthread_mutex_unlock(&philo->fork.fork_mutex_right);
+    pthread_mutex_unlock(philo->fork.fork_mutex_left);
+    
+    go_print(philo, SLEEP);
+    ft_usleep(philo->time->sleep, philo);
+
+    go_print(philo, THINK);
+    if (ft_get_time(philo) < philo->time->die)
+    {
+        ft_usleep(philo->time->die - ft_get_time(philo), philo);
+    }
+    go_print(philo, DIE);
+    pthread_exit(&philo->fork.fork_mutex_right);
+}
+
 void*   ft_routine_die_sleeping(t_philo *philo)
 {
-    if (philo->id % 2 == 0)
-        usleep(100);
+    if (philo->id % 2 == 1)
+        usleep(philo->time->eat);
+    if (ft_check_cycle(philo) == 1)
+        pthread_exit(&philo->fork.fork_mutex_right);
     ft_philo_eat(philo);
     ft_usleep(philo->time->eat, philo);
     
     pthread_mutex_unlock(&philo->fork.fork_mutex_right);
     pthread_mutex_unlock(philo->fork.fork_mutex_left);
 
-    go_print(philo, THINK);
     go_print(philo, SLEEP);
     ft_usleep(philo->time->sleep, philo);
+    go_print(philo, THINK);
 
     go_print(philo, DIE);
     pthread_exit(&philo->fork.fork_mutex_right);
@@ -84,8 +128,10 @@ void*   ft_routine_die_sleeping(t_philo *philo)
 
 void*   ft_routine_die_eating(t_philo *philo)
 {
-    if (philo->id % 2 == 0)
-        usleep(100);
+    if (philo->id % 2 == 1)
+        usleep(philo->time->eat);
+    if (ft_check_cycle(philo) == 1)
+        pthread_exit(&philo->fork.fork_mutex_right);
     ft_philo_eat(philo);
     ft_usleep(philo->time->die, philo); 
   
@@ -109,14 +155,18 @@ void*   ft_routine_principale(t_philo *philo)
 {   
     while (1)
     {
+        if (ft_check_cycle(philo) == 1)
+            break;
         ft_philo_eat(philo);
         ft_usleep(philo->time->eat, philo);
         
         pthread_mutex_unlock(&philo->fork.fork_mutex_right);
         pthread_mutex_unlock(philo->fork.fork_mutex_left);
         
-        go_print(philo, THINK);
         go_print(philo, SLEEP);
         ft_usleep(philo->time->sleep, philo);
+        go_print(philo, THINK);
+        
     }
+    pthread_exit(&philo->fork.fork_mutex_right);
 }

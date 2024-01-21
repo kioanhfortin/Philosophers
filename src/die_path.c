@@ -6,7 +6,7 @@
 /*   By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 14:01:28 by kfortin           #+#    #+#             */
-/*   Updated: 2024/01/20 14:56:33 by kfortin          ###   ########.fr       */
+/*   Updated: 2024/01/20 18:15:15 by kfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int ft_die_eating(t_time *time)
 {
     if (time->eat > time->die)
     {
-        time->total_time_before_death = time->die;
+        // time->total_time_before_death = time->die;
         return (1);
     }
     return (0);
@@ -38,8 +38,8 @@ int ft_finish_eat_then_die(t_time *time)
 
 int ft_die_thinking(t_time *time)
 {
-    (void)time;
-    //if ?
+    if (time->eat > time->sleep)
+        return (1);
     return (0);
 }
 
@@ -80,7 +80,7 @@ void ft_is_philo_die(t_time *time)
     if (time->nbr_philo == 1)
     {
             // printf("die while eating\n");
-            time->total_time_before_death = time->eat + time->sleep;
+            // time->total_time_before_death = time->eat + time->sleep;
             // printf("total_time_before_death %d\n", time->total_time_before_death);
             time->way_to_die = ONE_PHILO;
     }

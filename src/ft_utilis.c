@@ -6,7 +6,7 @@
 /*   By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 15:25:24 by kfortin           #+#    #+#             */
-/*   Updated: 2024/01/21 12:08:46 by kfortin          ###   ########.fr       */
+/*   Updated: 2024/02/01 05:15:58 by kfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,6 @@ void    ft_usleep(long tim, t_philo *philo)
         usleep(150);
 }
 
-// void    ft_init_status(t_time *time)
-// {
-//     int i;
-
-//     i = 0;
-//     time->status = ft_calloc(sizeof(int), time->nbr_philo);
-//     while (i < time->nbr_philo)
-//     {
-//         time->status
-//         i++;
-//     }
-// }
-
 int ft_init_philo(t_time *time, t_philo *philo)
 {
     int i;
@@ -60,6 +47,16 @@ int ft_init_philo(t_time *time, t_philo *philo)
         philo[i].id = i + 1;
         i++;
     }
+    ft_calloc_struct(time);
+    ft_is_philo_die(time);
+    ft_init_thread(time, philo);
+    return(0);
+}
+
+void    ft_calloc_struct(t_time *time)
+{
+    int i;
+    
     time->status = ft_calloc(sizeof(int*), 1);
     i = 0;
     while (i < time->nbr_philo)
@@ -74,7 +71,4 @@ int ft_init_philo(t_time *time, t_philo *philo)
         time->status_fork[i] = (int)ft_calloc(sizeof(int), 1);
         i++;
     }
-    ft_is_philo_die(time);
-    ft_init_thread(time, philo);
-    return(0);
 }

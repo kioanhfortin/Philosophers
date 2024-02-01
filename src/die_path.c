@@ -6,7 +6,7 @@
 /*   By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 14:01:28 by kfortin           #+#    #+#             */
-/*   Updated: 2024/01/21 13:16:10 by kfortin          ###   ########.fr       */
+/*   Updated: 2024/02/01 05:11:00 by kfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ int ft_die_eating(t_time *time)
 {
     if (time->eat > time->die)
     {
-        // time->total_time_before_death = time->die;
         return (1);
     }
     return (0);

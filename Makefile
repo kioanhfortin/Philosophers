@@ -6,7 +6,7 @@
 #    By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/25 11:04:35 by kfortin           #+#    #+#              #
-#    Updated: 2024/01/13 15:06:58 by kfortin          ###   ########.fr        #
+#    Updated: 2024/02/01 05:27:12 by kfortin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,7 @@ SRC_FILES		=	philo.c 						\
 					die_path.c						\
 					ft_routine.c 					\
 					ft_utilis.c 					\
+					ft_utilis_thread.c 				\
 					ft_thread.c 					\
 
 OBJS			=	$(addprefix $(OBJ_DIR), $(OBJ_FILES))

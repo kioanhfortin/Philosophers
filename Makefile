@@ -6,7 +6,7 @@
 #    By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/25 11:04:35 by kfortin           #+#    #+#              #
-#    Updated: 2024/02/01 05:27:12 by kfortin          ###   ########.fr        #
+#    Updated: 2024/02/13 17:31:02 by kfortin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,9 @@ OBJ_DIR		=	obj/
 
 SRC_FILES		=	philo.c 						\
 					die_path.c						\
+					die_path_utilis.c				\
 					ft_routine.c 					\
+					ft_routine_utilis.c 			\
 					ft_utilis.c 					\
 					ft_utilis_thread.c 				\
 					ft_thread.c 					\

@@ -6,7 +6,7 @@
 /*   By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 11:05:13 by kfortin           #+#    #+#             */
-/*   Updated: 2024/02/01 05:22:56 by kfortin          ###   ########.fr       */
+/*   Updated: 2024/02/13 18:03:11 by kfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ typedef enum e_die
 	SLEEPING,
 	EAT_THEN_DIE,
 	THINKING,
-	EAT_DIE_EVEN,
-    EAT_DIE_ODD,
     DONT_DIE,
+	// EAT_DIE_EVEN,
+    // EAT_DIE_ODD,
 } t_die;
 
 typedef enum e_print
@@ -100,6 +100,8 @@ void    ft_usleep(long tim, t_philo *philo);
 int ft_init_philo(t_time *time, t_philo *philo);
 void    ft_calloc_struct(t_time *time);
 void ft_init_thread(t_time *time, t_philo *philo);
+void    ft_init_mutex_struct(t_time *time, t_philo *philo);
+void    ft_find_philo(t_time *time, t_philo *philo, int i);
 time_t    ft_get_time(t_philo *philo);
 void    ft_join_and_destroy(t_time *time, t_philo *philo);
 
@@ -114,7 +116,7 @@ void    ft_philo_eat(t_philo *philo);
 void    ft_philo_think(t_philo *philo);
 void    ft_philo_die(t_philo *philo);
 
-void    go_print(t_philo *philo, int i);
+void	go_print(t_philo *philo, int i, int philo_id);
 int     ft_check_status(t_philo *philo);
 int     ft_check_cycle(t_philo *philo);
 

@@ -6,7 +6,7 @@
 /*   By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 11:10:53 by kfortin           #+#    #+#             */
-/*   Updated: 2024/02/13 17:03:41 by kfortin          ###   ########.fr       */
+/*   Updated: 2024/02/14 22:06:51 by kfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	ft_check_num(int argc, char **argv)
 	return (1);
 }
 
-void	ft_parsing(int argc, char **argv, t_time *time)
+int	ft_parsing(int argc, char **argv, t_time *time)
 {
 	if (ft_check_num(argc, argv) == 1)
 	{
@@ -43,10 +43,15 @@ void	ft_parsing(int argc, char **argv, t_time *time)
 		time->eat = ft_atoi(argv[3]);
 		time->sleep = ft_atoi(argv[4]);
 		if (argc == 6)
+		{
+			if (ft_atoi(argv[5]) == 0)
+				return (1);
 			time->nbr_cycle = ft_atoi(argv[5]);
+		}
 	}
 	else
 		printf("error parsing\n");
+	return (0);
 }
 
 int	main(int argc, char **argv)
@@ -62,7 +67,8 @@ int	main(int argc, char **argv)
 	{
 		if (ft_check_num(argc, argv) == 1)
 		{
-			ft_parsing(argc, argv, time);
+			if (ft_parsing(argc, argv, time) == 1)
+				return (1);
 			ft_init_philo(time, philo);
 		}
 		else

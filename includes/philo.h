@@ -6,7 +6,7 @@
 /*   By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 11:05:13 by kfortin           #+#    #+#             */
-/*   Updated: 2024/02/13 18:03:11 by kfortin          ###   ########.fr       */
+/*   Updated: 2024/02/14 22:13:43 by kfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,11 @@ typedef enum e_die
 {
 	ONE_PHILO,
 	EATING,
+	EAT_DIE_EVEN,
+    EAT_DIE_ODD,
 	SLEEPING,
 	EAT_THEN_DIE,
-	THINKING,
     DONT_DIE,
-	// EAT_DIE_EVEN,
-    // EAT_DIE_ODD,
 } t_die;
 
 typedef enum e_print
@@ -39,6 +38,7 @@ typedef enum e_print
 	SLEEP,
 	THINK,
     DIE,
+    CYCLE,
 } t_print;
 
 typedef struct s_fork
@@ -59,7 +59,6 @@ typedef struct s_time
     pthread_mutex_t last_diner_mutex;
     int stop;
     pthread_mutex_t stop_mutex;
-    int cycle_count;
     pthread_mutex_t cycle_mutex;
     // int total;
     // int max;
@@ -79,12 +78,13 @@ typedef struct s_time
 typedef struct s_philo 
 {
     int id;
+    int cycle_count;
     int *ptr;
     t_fork fork;
     t_time *time;
 }   t_philo;
 
-void ft_parsing(int argc, char **argv, t_time *time);
+int	ft_parsing(int argc, char **argv, t_time *time);
 int ft_check_num(int argc, char **argv);
 
 void ft_is_philo_die(t_time *time);
@@ -108,13 +108,14 @@ void    ft_join_and_destroy(t_time *time, t_philo *philo);
 void*   ft_routine_alone(t_philo *philo);
 void*   ft_routine_die_eating(t_philo *philo);
 void*   ft_routine_die_sleeping(t_philo *philo);
-void*   ft_routine_eat_then_die(t_philo *philo);
 void*   ft_routine_die_thinking(t_philo *philo);
+void*   ft_routine_live_odd(t_philo *philo);
 void*   ft_routine_principale(t_philo *philo);
+void*   ft_routine_eat_then_die(t_philo *philo);
 
 void    ft_philo_eat(t_philo *philo);
 void    ft_philo_think(t_philo *philo);
-void    ft_philo_die(t_philo *philo);
+// void    ft_philo_die(t_philo *philo);
 
 void	go_print(t_philo *philo, int i, int philo_id);
 int     ft_check_status(t_philo *philo);

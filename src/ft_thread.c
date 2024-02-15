@@ -6,7 +6,7 @@
 /*   By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 14:38:32 by kfortin           #+#    #+#             */
-/*   Updated: 2024/02/13 18:04:34 by kfortin          ###   ########.fr       */
+/*   Updated: 2024/02/14 22:17:24 by kfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,28 +53,28 @@ void	ft_init_thread(t_time *time, t_philo *philo)
 		i++;
 	}
 	ft_join_and_destroy(time, philo);
+	if (time->way_to_die == 6 || time->way_to_die == 3)
+		go_print(philo, CYCLE, philo->id);
 }
 
 void	ft_find_philo(t_time *time, t_philo *philo, int i)
 {
 	if (philo->time->way_to_die == ONE_PHILO)
-		pthread_create(&time->philo_tid[i], NULL, (void *)&ft_routine_alone,
-			&philo[i]);
+		pthread_create(&time->philo_tid[i], NULL, (void *)&ft_routine_alone, &philo[i]);
 	else if (philo->time->way_to_die == EATING)
 		pthread_create(&time->philo_tid[i], NULL,
 			(void *)&ft_routine_die_eating, &philo[i]);
-	else if (philo->time->way_to_die == SLEEPING)
-		pthread_create(&time->philo_tid[i], NULL,
-			(void *)&ft_routine_die_sleeping, &philo[i]);
 	else if (philo->time->way_to_die == EAT_THEN_DIE)
 		pthread_create(&time->philo_tid[i], NULL,
 			(void *)&ft_routine_eat_then_die, &philo[i]);
-	else if (philo->time->way_to_die == THINKING)
-		pthread_create(&time->philo_tid[i], NULL,
-			(void *)&ft_routine_die_thinking, &philo[i]);
+	else if (philo->time->way_to_die == EAT_DIE_EVEN)
+		pthread_create(&time->philo_tid[i], NULL, (void *)&ft_routine_die_thinking, &philo[i]);
+	else if (philo->time->way_to_die == EAT_DIE_ODD)
+		pthread_create(&time->philo_tid[i], NULL, (void *)&ft_routine_live_odd, &philo[i]);
+	else if (philo->time->way_to_die == SLEEPING)
+		pthread_create(&time->philo_tid[i], NULL, (void *)&ft_routine_die_sleeping, &philo[i]);
 	else
-		pthread_create(&time->philo_tid[i], NULL,
-			(void *)&ft_routine_principale, &philo[i]);
+		pthread_create(&time->philo_tid[i], NULL, (void *)&ft_routine_principale, &philo[i]);
 }
 
 void	ft_join_and_destroy(t_time *time, t_philo *philo)

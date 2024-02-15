@@ -6,7 +6,7 @@
 /*   By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 05:25:56 by kfortin           #+#    #+#             */
-/*   Updated: 2024/02/13 17:59:36 by kfortin          ###   ########.fr       */
+/*   Updated: 2024/02/14 22:27:18 by kfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,31 +69,15 @@ void	ft_philo_think(t_philo *philo)
 	}
 }
 
-void	ft_philo_die(t_philo *philo)
-{
-	// time_t time_elapsed;
-	// time_elapsed = ft_get_time(philo) - philo->time->tmp_last_diner;
-	// if (time_elapsed > philo->time->die)
-	// {
-	pthread_mutex_lock(&philo->time->print_mutex);
-	printf("%zu %d died\n", ft_get_time(philo), philo->id);
-	pthread_mutex_unlock(&philo->time->print_mutex);
-	// philo->status = 1;
-	// }
-}
-
-// int ft_checker(t_philo *philo)
+// void	ft_philo_die(t_philo *philo)
 // {
-//     int i;
-
-//     i = 0;
-//     while(1)
-//     {
-//         while (i < philo->time->nbr_philo)
-//         {
-//             if (philo->time->status[i] == 1)
-//                 philo->time->stop = 1;
-//             i++;
-//         }
-//     }
+// 	// time_t time_elapsed;
+// 	// time_elapsed = ft_get_time(philo) - philo->time->tmp_last_diner;
+// 	// if (time_elapsed > philo->time->die)
+// 	// {
+// 	pthread_mutex_lock(&philo->time->print_mutex);
+// 	printf("%zu %d died\n", ft_get_time(philo), philo->id);
+// 	pthread_mutex_unlock(&philo->time->print_mutex);
+// 	// philo->status = 1;
+// 	// }
 // }

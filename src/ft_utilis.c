@@ -6,7 +6,7 @@
 /*   By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 15:25:24 by kfortin           #+#    #+#             */
-/*   Updated: 2024/02/13 17:01:16 by kfortin          ###   ########.fr       */
+/*   Updated: 2024/02/14 21:02:34 by kfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,13 @@ void	ft_calloc_struct(t_time *time)
 {
 	int	i;
 
-	time->status = ft_calloc(sizeof(int *), 1);
-	i = 0;
-	while (i < time->nbr_philo)
-	{
-		time->status[i] = (int)ft_calloc(sizeof(int), 1);
-		i++;
-	}
+	time->status = ft_calloc(sizeof(int *), time->nbr_philo);
+	// i = 0;
+	// while (i < time->nbr_philo)
+	// {
+	// 	time->status[i] = (int)ft_calloc(sizeof(int), 1);
+	// 	i++;
+	// }
 	time->status_fork = ft_calloc(sizeof(int *), 1);
 	i = 0;
 	while (i < time->nbr_philo)

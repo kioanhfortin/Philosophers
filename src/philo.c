@@ -6,7 +6,7 @@
 /*   By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 11:10:53 by kfortin           #+#    #+#             */
-/*   Updated: 2024/02/14 22:06:51 by kfortin          ###   ########.fr       */
+/*   Updated: 2024/02/16 20:24:12 by kfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_check_num(int argc, char **argv)
 	while (i < argc)
 	{
 		j = 0;
-		if (ft_atoi(argv[i]) < 0 || ft_atoi(argv[i]) > 2147483647)
+		if (ft_atoi(argv[i]) < 0 || ft_atoi(argv[i]) > 2147483647)//complete garbage
 			return (0);
 		while (j < ft_strlen(argv[i]))
 		{
@@ -36,22 +36,37 @@ int	ft_check_num(int argc, char **argv)
 
 int	ft_parsing(int argc, char **argv, t_time *time)
 {
-	if (ft_check_num(argc, argv) == 1)
+	time->nbr_philo = ft_atoi(argv[1]);
+	time->die = ft_atoi(argv[2]);
+	time->eat = ft_atoi(argv[3]);
+	time->sleep = ft_atoi(argv[4]);
+	if (time->nbr_philo == 0 || time->die < 60 || time->eat < 60 || time->sleep < 60)
+		return (1);
+	if (argc == 6)
 	{
-		time->nbr_philo = ft_atoi(argv[1]);
-		time->die = ft_atoi(argv[2]);
-		time->eat = ft_atoi(argv[3]);
-		time->sleep = ft_atoi(argv[4]);
-		if (argc == 6)
-		{
-			if (ft_atoi(argv[5]) == 0)
-				return (1);
-			time->nbr_cycle = ft_atoi(argv[5]);
-		}
+		if (ft_atoi(argv[5]) == 0)
+			return (1);
+		time->nbr_cycle = ft_atoi(argv[5]);
 	}
-	else
-		printf("error parsing\n");
 	return (0);
+}
+
+void	nullify(void **ptr)
+{
+	if (*ptr)
+	{
+		free(*ptr);
+		*ptr = NULL;
+	}
+}
+
+void	ft_free_all(t_time *time, t_philo *philo)
+{
+	nullify((void**)&time->status_fork);
+	nullify((void**)&time->status);
+	nullify((void**)time->philo_tid);
+	nullify((void**)&philo);
+	nullify((void**)&time);
 }
 
 int	main(int argc, char **argv)
@@ -62,21 +77,33 @@ int	main(int argc, char **argv)
 	philo = NULL;
 	time = ft_calloc(sizeof(struct s_time), 1);
 	if (!time)
-		return (-1);
+		return (1);
 	if (argc == 5 || argc == 6)
 	{
 		if (ft_check_num(argc, argv) == 1)
 		{
 			if (ft_parsing(argc, argv, time) == 1)
-				return (1);
-			ft_init_philo(time, philo);
+			{
+				ft_free_all(time, philo);
+				return (0);
+			}
+			if (ft_init_philo(time, philo) == 1)
+			{
+				ft_free_all(time, philo);
+				return (printf("error memory usage\n"),1);
+			}
 		}
 		else
-			printf("error parsing\n");
+		{
+			ft_free_all(time, philo);
+			return (printf("error parsing\n"), 1);
+		}
 	}
 	else
-		printf("error number of arguments\n");
-	if (time)
-		free(time);
+	{
+		ft_free_all(time, philo);
+		return (printf("error number of arguments\n"), 1);
+	}
+	ft_free_all(time, philo);
 	return (0);
 }

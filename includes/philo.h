@@ -6,7 +6,7 @@
 /*   By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 11:05:13 by kfortin           #+#    #+#             */
-/*   Updated: 2024/02/14 22:13:43 by kfortin          ###   ########.fr       */
+/*   Updated: 2024/02/16 20:24:34 by kfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,6 @@ typedef struct s_time
     int stop;
     pthread_mutex_t stop_mutex;
     pthread_mutex_t cycle_mutex;
-    // int total;
-    // int max;
-    // int total_time_before_death;
-    // int nbr_diner_left;
     int way_to_die;
     int *status;
     pthread_mutex_t status_mutex;
@@ -97,11 +93,11 @@ int ft_time_eat_die_odd(t_time *time);
 int ft_nb_even(int nb);
 
 void    ft_usleep(long tim, t_philo *philo);
-int ft_init_philo(t_time *time, t_philo *philo);
-void    ft_calloc_struct(t_time *time);
-void ft_init_thread(t_time *time, t_philo *philo);
-void    ft_init_mutex_struct(t_time *time, t_philo *philo);
-void    ft_find_philo(t_time *time, t_philo *philo, int i);
+int     ft_init_philo(t_time *time, t_philo *philo);
+int	    ft_calloc_struct(t_time *time);
+int	ft_init_thread(t_time *time, t_philo *philo);
+int	ft_init_mutex_struct(t_time *time, t_philo *philo);
+int	ft_find_philo(t_time *time, t_philo *philo, int i);
 time_t    ft_get_time(t_philo *philo);
 void    ft_join_and_destroy(t_time *time, t_philo *philo);
 
@@ -115,12 +111,12 @@ void*   ft_routine_eat_then_die(t_philo *philo);
 
 void    ft_philo_eat(t_philo *philo);
 void    ft_philo_think(t_philo *philo);
-// void    ft_philo_die(t_philo *philo);
 
 void	go_print(t_philo *philo, int i, int philo_id);
 int     ft_check_status(t_philo *philo);
 int     ft_check_cycle(t_philo *philo);
 
-// int ft_checker(t_philo *philo);
+void	nullify(void **ptr);
+void	ft_free_all(t_time *time, t_philo *philo);
 
 #endif

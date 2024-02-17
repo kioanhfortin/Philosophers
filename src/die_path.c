@@ -6,7 +6,7 @@
 /*   By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 14:01:28 by kfortin           #+#    #+#             */
-/*   Updated: 2024/02/14 22:26:24 by kfortin          ###   ########.fr       */
+/*   Updated: 2024/02/16 19:09:53 by kfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,6 @@ void	ft_is_philo_die(t_time *time)
 	else
 	{
 		time->way_to_die = count;
-		printf("way to die %d, count : %d\n", time->way_to_die, count);
+		// printf("way to die %d, count : %d\n", time->way_to_die, count);
 	}
 }

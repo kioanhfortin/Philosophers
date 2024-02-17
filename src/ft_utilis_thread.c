@@ -6,7 +6,7 @@
 /*   By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 05:25:56 by kfortin           #+#    #+#             */
-/*   Updated: 2024/02/14 22:27:18 by kfortin          ###   ########.fr       */
+/*   Updated: 2024/02/16 17:13:03 by kfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ time_t	ft_get_time(t_philo *philo)
 {
 	struct timeval	end;
 
-	gettimeofday(&end, NULL);
+	if (gettimeofday(&end, NULL) == -1)
+		return (printf("error time"), -1);
 	return ((end.tv_sec - philo->time->start.tv_sec) * 1000 + (end.tv_usec
 			- philo->time->start.tv_usec) / 1000);
 }

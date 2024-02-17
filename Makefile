@@ -6,7 +6,7 @@
 #    By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/25 11:04:35 by kfortin           #+#    #+#              #
-#    Updated: 2024/02/13 17:31:02 by kfortin          ###   ########.fr        #
+#    Updated: 2024/02/15 13:59:25 by kfortin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ HEADER_F	=	philo.h
 # CFLAGS			=	-Wall -Werror -Wextra -g
 
 CC				=	gcc
-CFLAGS			=	-Wall -Werror -Wextra -fsanitize=thread -g
+CFLAGS			=	-Wall -Werror -Wextra -fsanitize=thread -g -o2
 RM 				=	rm -rf
 
 ###############################################################################

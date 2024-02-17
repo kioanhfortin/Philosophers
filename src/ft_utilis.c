@@ -6,7 +6,7 @@
 /*   By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 15:25:24 by kfortin           #+#    #+#             */
-/*   Updated: 2024/02/14 21:02:34 by kfortin          ###   ########.fr       */
+/*   Updated: 2024/02/16 19:49:33 by kfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	ft_usleep(long tim, t_philo *philo)
 	long long	start;
 
 	start = ft_get_time(philo);
-	usleep(tim * 1000);
+	usleep(1000);
 	while (ft_get_time(philo) < tim + start)
 		usleep(150);
 }
@@ -36,10 +36,10 @@ int	ft_init_philo(t_time *time, t_philo *philo)
 	i = 0;
 	philo = ft_calloc(sizeof(struct s_philo), time->nbr_philo);
 	if (!philo)
-		return (-1);
+		return (1);
 	time->philo_tid = ft_calloc(sizeof(pthread_t), time->nbr_philo);
 	if (!time->philo_tid)
-		return (-1);
+		return (1);
 	time->philo = philo;
 	while (i < time->nbr_philo)
 	{
@@ -47,28 +47,21 @@ int	ft_init_philo(t_time *time, t_philo *philo)
 		philo[i].id = i + 1;
 		i++;
 	}
-	ft_calloc_struct(time);
+	if (ft_calloc_struct(time) == 1)
+		return (1);
 	ft_is_philo_die(time);
-	ft_init_thread(time, philo);
+	if (ft_init_thread(time, philo) != 0)
+		return (1);
 	return (0);
 }
 
-void	ft_calloc_struct(t_time *time)
+int	ft_calloc_struct(t_time *time)
 {
-	int	i;
-
 	time->status = ft_calloc(sizeof(int *), time->nbr_philo);
-	// i = 0;
-	// while (i < time->nbr_philo)
-	// {
-	// 	time->status[i] = (int)ft_calloc(sizeof(int), 1);
-	// 	i++;
-	// }
-	time->status_fork = ft_calloc(sizeof(int *), 1);
-	i = 0;
-	while (i < time->nbr_philo)
-	{
-		time->status_fork[i] = (int)ft_calloc(sizeof(int), 1);
-		i++;
-	}
+	if (!time->status)
+		return (1);
+	time->status_fork = ft_calloc(sizeof(int *), time->nbr_philo);
+	if (!time->status_fork)
+		return (1);
+	return (0);
 }

@@ -6,12 +6,11 @@
 /*   By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 14:01:28 by kfortin           #+#    #+#             */
-/*   Updated: 2024/02/16 19:09:53 by kfortin          ###   ########.fr       */
+/*   Updated: 2024/02/17 16:08:45 by kfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
 
 int	ft_time_eat_die_even(t_time *time)
 {
@@ -57,8 +56,5 @@ void	ft_is_philo_die(t_time *time)
 	if (time->nbr_philo == 1)
 		time->way_to_die = ONE_PHILO;
 	else
-	{
 		time->way_to_die = count;
-		// printf("way to die %d, count : %d\n", time->way_to_die, count);
-	}
 }

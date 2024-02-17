@@ -6,7 +6,7 @@
 /*   By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/13 13:12:11 by kfortin           #+#    #+#             */
-/*   Updated: 2024/02/16 18:45:15 by kfortin          ###   ########.fr       */
+/*   Updated: 2024/02/17 16:12:34 by kfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,13 @@
 
 void	*ft_routine_die_thinking(t_philo *philo)
 {
-	// printf("2 -- die thinking even\n");
 	if (philo->id % 2 == 0)
 		ft_usleep(philo->time->eat, philo);
-	// ft_philo_think(philo);
 	go_print(philo, THINK, philo->id);
 	ft_philo_eat(philo);
 	ft_usleep(philo->time->eat, philo);
-	pthread_mutex_unlock(&philo->fork.fork_mutex_right);
-	pthread_mutex_unlock(philo->fork.fork_mutex_left);
+	pthread_mutex_unlock(&philo->fork_mutex_right);
+	pthread_mutex_unlock(philo->fork_mutex_left);
 	if (ft_check_cycle(philo) == 1)
 	{
 		pthread_exit(philo->time->philo_tid[philo->id]);
@@ -39,7 +37,6 @@ void	*ft_routine_die_thinking(t_philo *philo)
 
 void	*ft_routine_die_sleeping(t_philo *philo)
 {
-	// printf("4 -- die sleeping\n");
 	if (philo->id % 2 == 0)
 		ft_usleep(philo->time->eat / 2, philo);
 	while (1)
@@ -47,16 +44,16 @@ void	*ft_routine_die_sleeping(t_philo *philo)
 		go_print(philo, THINK, philo->id);
 		ft_philo_eat(philo);
 		ft_usleep(philo->time->eat, philo);
-		pthread_mutex_unlock(&philo->fork.fork_mutex_right);
-		pthread_mutex_unlock(philo->fork.fork_mutex_left);
+		pthread_mutex_unlock(&philo->fork_mutex_right);
+		pthread_mutex_unlock(philo->fork_mutex_left);
 		if (ft_check_cycle(philo) == 1)
 			pthread_exit(philo->time->philo_tid[philo->id]);
-		if ((philo->time->sleep < philo->time->die) && (ft_get_time(philo) >= philo->time->die + philo->time->eat))
+		if ((philo->time->sleep < philo->time->die)
+			&& (ft_get_time(philo) >= philo->time->die + philo->time->eat))
 		{
 			go_print(philo, DIE, philo->id);
 			pthread_exit(philo->time->philo_tid[philo->id]);
 		}
-		// else if ((philo->time->sleep > philo->time->die) && (ft_get_time(philo) >= philo->time->die))
 		else if (ft_get_time(philo) >= philo->time->die)
 		{
 			go_print(philo, DIE, philo->id);
@@ -69,7 +66,6 @@ void	*ft_routine_die_sleeping(t_philo *philo)
 
 void	*ft_routine_die_eating(t_philo *philo)
 {
-	// printf("1 -- die eating\n");
 	if (philo->id % 2 == 0)
 		ft_usleep(philo->time->eat, philo);
 	if (ft_check_cycle(philo) == 1)
@@ -77,16 +73,15 @@ void	*ft_routine_die_eating(t_philo *philo)
 	go_print(philo, THINK, philo->id);
 	ft_philo_eat(philo);
 	ft_usleep(philo->time->die, philo);
-	pthread_mutex_unlock(&philo->fork.fork_mutex_right);
-	pthread_mutex_unlock(philo->fork.fork_mutex_left);
+	pthread_mutex_unlock(&philo->fork_mutex_right);
+	pthread_mutex_unlock(philo->fork_mutex_left);
 	go_print(philo, DIE, 2);
 	pthread_exit(philo->time->philo_tid[philo->id]);
 }
 
 void	*ft_routine_alone(t_philo *philo)
 {
-	// printf("0 -- die alone\n");
-	pthread_mutex_lock(&philo->fork.fork_mutex_right);
+	pthread_mutex_lock(&philo->fork_mutex_right);
 	go_print(philo, FORK, philo->id);
 	ft_usleep(philo->time->die, philo);
 	go_print(philo, DIE, philo->id);
@@ -95,7 +90,6 @@ void	*ft_routine_alone(t_philo *philo)
 
 void	*ft_routine_principale(t_philo *philo)
 {
-	// printf("6 -- never die\n");
 	if (philo->id % 2 == 0)
 		ft_usleep(philo->time->eat, philo);
 	while (1)
@@ -107,8 +101,8 @@ void	*ft_routine_principale(t_philo *philo)
 		go_print(philo, THINK, philo->id);
 		ft_philo_eat(philo);
 		ft_usleep(philo->time->eat, philo);
-		pthread_mutex_unlock(&philo->fork.fork_mutex_right);
-		pthread_mutex_unlock(philo->fork.fork_mutex_left);
+		pthread_mutex_unlock(&philo->fork_mutex_right);
+		pthread_mutex_unlock(philo->fork_mutex_left);
 		go_print(philo, SLEEP, philo->id);
 		ft_usleep(philo->time->sleep, philo);
 	}

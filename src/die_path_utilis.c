@@ -6,7 +6,7 @@
 /*   By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:59:16 by kfortin           #+#    #+#             */
-/*   Updated: 2024/02/16 16:20:05 by kfortin          ###   ########.fr       */
+/*   Updated: 2024/02/17 16:41:00 by kfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	ft_die_sleeping(t_time *time)
 {
 	if ((time->eat + time->sleep == time->die) || (time->sleep > time->eat))
 		return (1);
-	// if ((time->eat + time->sleep == time->die))
 	return (0);
 }
 
@@ -32,4 +31,22 @@ int	ft_finish_eat_then_die(t_time *time)
 	if (time->eat == time->die)
 		return (1);
 	return (0);
+}
+
+void	nullify(void **ptr)
+{
+	if (*ptr)
+	{
+		free(*ptr);
+		*ptr = NULL;
+	}
+}
+
+void	ft_free_all(t_time *time)
+{
+	nullify((void **)&time->status_fork);
+	nullify((void **)&time->status);
+	nullify((void **)&time->philo_tid);
+	nullify((void **)&time->philo);
+	nullify((void **)&time);
 }

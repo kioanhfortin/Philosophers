@@ -6,7 +6,7 @@
 /*   By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/01 05:25:56 by kfortin           #+#    #+#             */
-/*   Updated: 2024/02/16 17:13:03 by kfortin          ###   ########.fr       */
+/*   Updated: 2024/02/17 16:36:37 by kfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ time_t	ft_get_time(t_philo *philo)
 
 void	ft_philo_eat(t_philo *philo)
 {
-	pthread_mutex_lock(&philo->fork.fork_mutex_right);
-	pthread_mutex_lock(philo->fork.fork_mutex_left);
+	pthread_mutex_lock(&philo->fork_mutex_right);
+	pthread_mutex_lock(philo->fork_mutex_left);
 	pthread_mutex_lock(&philo->time->status_fork_mutex);
 	if (philo->id != 0)
 		philo->time->status_fork[philo->id - 1] = 1;
@@ -70,15 +70,20 @@ void	ft_philo_think(t_philo *philo)
 	}
 }
 
-// void	ft_philo_die(t_philo *philo)
-// {
-// 	// time_t time_elapsed;
-// 	// time_elapsed = ft_get_time(philo) - philo->time->tmp_last_diner;
-// 	// if (time_elapsed > philo->time->die)
-// 	// {
-// 	pthread_mutex_lock(&philo->time->print_mutex);
-// 	printf("%zu %d died\n", ft_get_time(philo), philo->id);
-// 	pthread_mutex_unlock(&philo->time->print_mutex);
-// 	// philo->status = 1;
-// 	// }
-// }
+void	ft_join_and_destroy(t_time *time, t_philo *philo)
+{
+	int	i;
+
+	i = 0;
+	while (i < time->nbr_philo)
+	{
+		pthread_join(time->philo_tid[i], (void **)&philo->ptr);
+		i++;
+	}
+	i = 0;
+	while (i < time->nbr_philo)
+	{
+		pthread_mutex_destroy(&philo[i].fork_mutex_right);
+		i++;
+	}
+}

@@ -6,7 +6,7 @@
 /*   By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:55:18 by kfortin           #+#    #+#             */
-/*   Updated: 2024/02/16 19:06:03 by kfortin          ###   ########.fr       */
+/*   Updated: 2024/02/17 16:12:56 by kfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	go_print(t_philo *philo, int i, int philo_nb)
 		if (i == THINK)
 			printf("%zu %d is thinking\n", ft_get_time(philo), philo_nb);
 		if (i == CYCLE)
-			printf("All philo have eat");
+			printf("All philo have eat\n");
 		if (i == DIE)
 		{
 			printf("%zu %d died\n", ft_get_time(philo), philo_nb);
@@ -74,7 +74,6 @@ int	ft_check_cycle(t_philo *philo)
 
 void	*ft_routine_eat_then_die(t_philo *philo)
 {
-	// printf("5 -- eat then die\n");
 	if (philo->id % 2 == 0)
 		ft_usleep(philo->time->eat / 2, philo);
 	while (1)
@@ -82,8 +81,8 @@ void	*ft_routine_eat_then_die(t_philo *philo)
 		go_print(philo, THINK, philo->id);
 		ft_philo_eat(philo);
 		ft_usleep(philo->time->eat, philo);
-		pthread_mutex_unlock(&philo->fork.fork_mutex_right);
-		pthread_mutex_unlock(philo->fork.fork_mutex_left);
+		pthread_mutex_unlock(&philo->fork_mutex_right);
+		pthread_mutex_unlock(philo->fork_mutex_left);
 		if (ft_get_time(philo) >= philo->time->die)
 		{
 			go_print(philo, DIE, philo->id);
@@ -96,7 +95,6 @@ void	*ft_routine_eat_then_die(t_philo *philo)
 
 void	*ft_routine_live_odd(t_philo *philo)
 {
-	// printf("3 -- live odd\n");
 	while (1)
 	{
 		if (philo->id % 2 == 0)
@@ -108,8 +106,8 @@ void	*ft_routine_live_odd(t_philo *philo)
 		}
 		ft_philo_eat(philo);
 		ft_usleep(philo->time->eat, philo);
-		pthread_mutex_unlock(&philo->fork.fork_mutex_right);
-		pthread_mutex_unlock(philo->fork.fork_mutex_left);
+		pthread_mutex_unlock(&philo->fork_mutex_right);
+		pthread_mutex_unlock(philo->fork_mutex_left);
 		go_print(philo, SLEEP, philo->id);
 		ft_usleep(philo->time->sleep, philo);
 	}

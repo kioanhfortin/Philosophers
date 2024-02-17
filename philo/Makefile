@@ -6,7 +6,7 @@
 #    By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/25 11:04:35 by kfortin           #+#    #+#              #
-#    Updated: 2024/02/17 14:33:32 by kfortin          ###   ########.fr        #
+#    Updated: 2024/02/17 17:05:37 by kfortin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,10 +21,9 @@ HEADER_F	=	philo.h
 #							    SYSTEM VARIABLES       					  	  #
 ###############################################################################
 
-# CFLAGS			=	-Wall -Werror -Wextra -fsanitize=address -g
+# CFLAGS			=	-Wall -Werror -Wextra -fsanitize=thread -g -o2
 
 CC				=	gcc
-# CFLAGS			=	-Wall -Werror -Wextra -fsanitize=thread -g -o2
 CFLAGS			=	-Wall -Werror -Wextra -g
 RM 				=	rm -rf
 

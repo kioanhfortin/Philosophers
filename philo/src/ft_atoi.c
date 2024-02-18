@@ -6,11 +6,11 @@
 /*   By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 15:28:02 by kfortin           #+#    #+#             */
-/*   Updated: 2022/04/25 11:17:44 by kfortin          ###   ########.fr       */
+/*   Updated: 2024/02/18 13:50:52 by kfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "philo.h"
 
 static int	ft_isspace(char c)
 {

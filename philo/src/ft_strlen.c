@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_calloc.c                                        :+:      :+:    :+:   */
+/*   ft_strlen.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/05 13:29:00 by kfortin           #+#    #+#             */
-/*   Updated: 2022/04/29 12:47:32 by kfortin          ###   ########.fr       */
+/*   Created: 2022/03/28 14:12:01 by kfortin           #+#    #+#             */
+/*   Updated: 2024/02/18 13:50:34 by kfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "philo.h"
 
-void	*ft_calloc(size_t count, size_t size)
+size_t	ft_strlen(const char *s)
 {
-	void	*str;
 	size_t	i;
 
-	i = count * size;
-	if (count == SIZE_MAX && size == SIZE_MAX)
-		return (NULL);
-	str = malloc(sizeof(char) * i);
-	if (!str)
-		return (NULL);
-	ft_memset(str, 0, i);
-	return (str);
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
 }

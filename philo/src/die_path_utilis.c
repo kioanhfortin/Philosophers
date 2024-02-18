@@ -6,7 +6,7 @@
 /*   By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/13 16:59:16 by kfortin           #+#    #+#             */
-/*   Updated: 2024/02/17 16:41:00 by kfortin          ###   ########.fr       */
+/*   Updated: 2024/02/18 14:04:27 by kfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	ft_die_eating(t_time *time)
 
 int	ft_die_sleeping(t_time *time)
 {
-	if ((time->eat + time->sleep == time->die) || (time->sleep > time->eat))
+	if (time->eat + time->sleep >= time->die)
 		return (1);
 	return (0);
 }

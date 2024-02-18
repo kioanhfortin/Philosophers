@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/08 15:41:54 by kfortin           #+#    #+#             */
-/*   Updated: 2022/04/11 17:09:56 by kfortin          ###   ########.fr       */
+/*   Created: 2022/03/28 14:23:17 by kfortin           #+#    #+#             */
+/*   Updated: 2024/02/18 13:50:38 by kfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "philo.h"
 
-void	ft_putendl_fd(char *s, int fd)
+void	*ft_memset(void *b, int c, size_t len)
 {
-	ft_putstr_fd(s, fd);
-	ft_putchar_fd('\n', fd);
+	while (len-- > 0)
+		((unsigned char *)b)[len] = (unsigned char)c;
+	return (b);
 }

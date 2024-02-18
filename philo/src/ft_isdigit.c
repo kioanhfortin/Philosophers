@@ -1,24 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
+/*   ft_isdigit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/12 14:13:15 by kfortin           #+#    #+#             */
-/*   Updated: 2022/04/20 12:06:59 by kfortin          ###   ########.fr       */
+/*   Created: 2022/03/28 11:54:27 by kfortin           #+#    #+#             */
+/*   Updated: 2024/02/18 13:50:47 by kfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "philo.h"
 
-void	ft_lstadd_back(t_list **lst, t_list *new)
+int	ft_isdigit(int c)
 {
-	t_list	*last;
-
-	last = ft_lstlast(*lst);
-	if (*lst)
-		last->next = new;
-	else
-		*lst = new;
+	if (!(c >= '0' && c <= '9'))
+		return (0);
+	return (1);
 }

@@ -6,7 +6,7 @@
 #    By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/09/25 11:04:35 by kfortin           #+#    #+#              #
-#    Updated: 2024/02/17 17:05:37 by kfortin          ###   ########.fr        #
+#    Updated: 2024/02/18 13:50:17 by kfortin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,17 +54,21 @@ SRC_FILES		=	philo.c 						\
 					ft_utilis.c 					\
 					ft_utilis_thread.c 				\
 					ft_thread.c 					\
+					ft_atoi.c 						\
+					ft_calloc.c 					\
+					ft_strlen.c 					\
+					ft_isdigit.c 					\
+					ft_memset.c 					\
 
 OBJS			=	$(addprefix $(OBJ_DIR), $(OBJ_FILES))
 OBJ_FILES		=	$(BUILTIN_FILES:.c=.o) $(SRC_FILES:.c=.o)
 
-RL_HEADER		=	$(addprefix $(LIBRL_DIR), $(LIBRL_H))
-HEADER			=	$(addprefix $(INCLUDE_DIR), $(HEADER_F)) $(RL_HEADER)
+HEADER			=	$(addprefix $(INCLUDE_DIR), $(HEADER_F))
 
 VPATH			=	$(SRC_DIR) $(BUILTIN_DIR) 
 
 $(OBJ_DIR)%.o: %.c $(SRC_DIR)
-	$(CC) $(CFLAGS) -I $(INCLUDE_DIR) -I $(LIBFT_DIR) -c $< -g -o $@ -static
+	$(CC) $(CFLAGS) -I $(INCLUDE_DIR) -c $< -g -o $@ -static
 
 ###############################################################################
 #							 		RECIPES								  	  #
@@ -73,8 +77,7 @@ $(OBJ_DIR)%.o: %.c $(SRC_DIR)
 all:	obj $(NAME)
 
 $(NAME):	$(OBJ_DIR) $(OBJS)
-	@make --silent -C $(LIBFT_DIR)
-	$(CC) $(CFLAGS) $(OBJS) $(LIBFT_DIR)libft.a -o $(NAME)
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
 
 obj:
 	mkdir -p $(OBJ_DIR)
@@ -88,14 +91,11 @@ fd : $(NAME)
 
 clean:
 	@$(RM) $(OBJS)
-	@make -C $(LIBFT_DIR) fclean
 
 fclean:		clean
 	@$(RM) $(NAME)
 	@$(RM) $(NAME).dSYM*
 	@$(RM) $(OBJ_DIR)
-	@$(RM) $(LIBFT_DIR)libft.a
-	@make -C $(LIBFT_DIR) clean
 
 re:		fclean all
 

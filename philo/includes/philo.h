@@ -6,14 +6,13 @@
 /*   By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 11:05:13 by kfortin           #+#    #+#             */
-/*   Updated: 2024/02/17 16:41:46 by kfortin          ###   ########.fr       */
+/*   Updated: 2024/02/18 13:52:19 by kfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PHILO_H
 # define PHILO_H
 
-# include "libft/libft.h"
 # include <pthread.h>
 # include <stdio.h>
 # include <stdlib.h>
@@ -117,5 +116,11 @@ int					ft_check_cycle(t_philo *philo);
 
 void				nullify(void **ptr);
 void				ft_free_all(t_time *time);
+
+int					ft_atoi(const char *str);
+void				*ft_calloc(size_t count, size_t size);
+int					ft_isdigit(int c);
+void				*ft_memset(void *b, int c, size_t len);
+size_t				ft_strlen(const char *s);
 
 #endif

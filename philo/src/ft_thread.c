@@ -6,7 +6,7 @@
 /*   By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 14:38:32 by kfortin           #+#    #+#             */
-/*   Updated: 2024/02/17 16:36:32 by kfortin          ###   ########.fr       */
+/*   Updated: 2024/02/20 15:46:41 by kfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	ft_norme_philo(t_time *time, t_philo *philo, int res, int i)
 {
 	if (philo->time->way_to_die == EAT_DIE_ODD)
 		res = pthread_create(&time->philo_tid[i], NULL,
-				(void *)&ft_routine_live_odd, &philo[i]);
+				(void *)&ft_routine_die_thinking, &philo[i]);
 	else if (philo->time->way_to_die == SLEEPING)
 		res = pthread_create(&time->philo_tid[i], NULL,
 				(void *)&ft_routine_die_sleeping, &philo[i]);

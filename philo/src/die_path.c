@@ -6,7 +6,7 @@
 /*   By: kfortin <kfortin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 14:01:28 by kfortin           #+#    #+#             */
-/*   Updated: 2024/02/17 16:08:45 by kfortin          ###   ########.fr       */
+/*   Updated: 2024/02/20 15:50:20 by kfortin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,21 @@ int	ft_time_eat_die_even(t_time *time)
 {
 	if (time->eat > time->sleep && time->nbr_philo % 2 == 0)
 	{
-		if (time->die * 2 >= time->eat)
-			return (1);
-		else if (time->die * 2 < time->eat)
+		if (time->die > time->eat * 2)
 			return (0);
+		else if (time->die <= time->eat * 2)
+			return (1);
 	}
 	return (0);
 }
 
 int	ft_time_eat_die_odd(t_time *time)
 {
-	if (time->eat > time->sleep && time->nbr_philo % 2 == 0)
+	if (time->eat > time->sleep && time->nbr_philo % 2 != 0)
 	{
-		if (time->die * 2 >= time->eat)
+		if (time->die > time->eat * 3)
 			return (0);
-		else if (time->die * 2 < time->eat)
+		else if (time->die <= time->eat * 3)
 			return (1);
 	}
 	return (0);
